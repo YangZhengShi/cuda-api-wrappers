@@ -133,7 +133,10 @@ inline event_t device_t::create_event(
 
 // event_t methods
 
-inline device_t event_t::device() const { return cuda::device::get(device_id_); }
+inline device_t event_t::device() const noexcept
+{
+	return cuda::device::get(device_id_);
+}
 
 inline void event_t::record(stream_t& stream)
 {
@@ -152,7 +155,7 @@ inline void event_t::fire(stream_t& stream)
 
 // stream_t methods
 
-inline device_t stream_t::device() const
+inline device_t stream_t::device() const noexcept
 {
 	return cuda::device::get(device_id_);
 }
@@ -210,7 +213,7 @@ inline event_t stream_t::enqueue_t::event(
 namespace memory {
 
 template <typename T>
-inline device_t pointer_t<T>::device() const
+inline device_t pointer_t<T>::device() const noexcept
 {
 	return cuda::device::get(attributes().device);
 }
